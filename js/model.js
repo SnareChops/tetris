@@ -70,10 +70,22 @@ var Block = function(shape, x, y){
     var midx = Math.floor(self.shape.max.x / 2);
     var midy = Math.floor(self.shape.max.y / 2);
     self.shape.coordinates.forEach(function(coord){
-      coord.x = coord.x + (midx - coord.x);
-      coord.y = coord.y + (midy - coord.y);
+      var xdiff = coord.x - midx;
+      var ydiff = coord.y - midy;
+      var result = translateCell(xdiff, ydiff);
+      coord.x = result.x;
+      coord.y = result.y;
     });
   };
+
+  function translateCell(x, y){
+    var newx = 0, newy = 0;
+    if(x < 0){newy = x*-1;} // -x => +y
+    if(y > 0){newx = y;}    // +y => +x
+    if(x > 0){newy = x*-1;} // +x => -y
+    if(y < 0){newx = y;}    // -y => -x
+    return {x: newx, y: newy};
+  }
 
   self.rotateLeft = function(){
 

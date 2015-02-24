@@ -2,7 +2,7 @@
 $(document).on('keyup', function(e){
   switch(e.which){
     case 78: // n
-      board.blocks.push(new Block(1, 0, 18));
+      board.blocks.push(new Block(0, 0, 18));
       break;
     case 37: // left
       board.blocks[0].moveLeft(board);
@@ -12,6 +12,9 @@ $(document).on('keyup', function(e){
       break;
     case 40: // down
       board.blocks[0].moveDown(board);
+      break;
+    case 38: // up
+      board.blocks[0].rotateRight();
       break;
   }
 });
