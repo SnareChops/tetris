@@ -1,0 +1,1 @@
+function tick(){clear(),draw(),console.log("tick")}function clear(){$(".cell").css("background-color","white")}function draw(){board.blocks.forEach(function(o){o.draw(board)})}var board=new Board($(".box"),20,10);setInterval(tick,100);
