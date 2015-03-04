@@ -11,7 +11,6 @@ var Block = function(shape, x, y){
     y: self.shape.min.y + self.position.y
   };
 
-
   self.moveDown = function(board){
     if(self.collision(board, {x: self.position.x, y: self.position.y - 1}, self.shape.coordinates)){
       self.shape.coordinates.forEach(function(coord){

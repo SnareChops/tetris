@@ -2,7 +2,7 @@
 $(document).on('keyup', function(e){
   switch(e.which){
     case 78: // n
-      board.blocks.push(new Block(0, 0, 18));
+      board.newBlock();
       break;
     case 37: // left
       board.blocks[0].moveLeft(board);

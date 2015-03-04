@@ -20,6 +20,10 @@ var Board = function($box, rows, cols){
   }
   self.rows = self.rows.reverse();
 
+  self.newBlock = function(){
+    self.blocks[0] = new Block(Math.floor(Math.random() * 6), 4, 18);
+  };
+
   self.draw = function(){
     var i,j;
     board.blocks.forEach(function(x){
