@@ -1,8 +1,14 @@
-var board = new Board($('.box'), 20, 10),
+var intervalId,board,tick;
+var paused = false;
+
+$('#new').click(function(){
+   $('.box').html(' ');
+
+   board = new Board($('.box'), 20, 10),
     blockMoveCounter = 0;
 
 
-function tick(){
+tick = function(){
   // All gaming logic handled here
   clear();
   autoBlockMove();
@@ -27,4 +33,19 @@ function autoBlockMove(){
   }
 }
 
-setInterval(tick, 100);
+    clearInterval(intervalId);
+    board.blocks=[];
+
+intervalId = setInterval(tick, 100);
+});
+$('#pause').click(function(){
+    if (paused){
+        $('.box').find('div.paused').remove();
+        intervalId = setInterval(tick, 100);
+        paused = false;
+    } else {
+        $('.box').append($('<div/>').addClass('paused'));
+        clearInterval(intervalId);
+        paused = true;
+    }
+});
