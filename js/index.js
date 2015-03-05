@@ -1,5 +1,6 @@
 
-$(document).on('keyup', function(e){
+$(document).on('keydown', function(e){
+
   switch(e.which){
     case 78: // n
       board.newBlock();
@@ -18,3 +19,6 @@ $(document).on('keyup', function(e){
       break;
   }
 });
+
+$('.box').height(($(window).height()-75+'px'));
+$('.box').width(($(this).height()/2));
