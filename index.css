@@ -52,28 +52,35 @@ table {
 
 body {
     height: 600px;
+    background-color: #505165;
 }
 
 .wrapper {
     margin:auto 30%;
     height:100%;
+    
 }
 
 .box {
     border: 2px solid black;
-    margin:auto;
+    margin: 50px;
+    text-align: center;
     height:100%;
+
+    
 }
 
 .row {
     width:100%;
-    height:5%;
+    height:7.5%;
+
 }
 
 .cell {
     height:100%;
     width:10%;
-    border:1px dotted black;
+    
     display:inline-block;
-
+    
 }
+
