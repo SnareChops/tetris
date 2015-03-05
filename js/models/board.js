@@ -10,6 +10,7 @@ var Board = function($box, rows, cols){
     self.blob[i] = [];
     var $row = $('<div/>').addClass('row'),
       row = new Row($row);
+
     for(j=0;j<cols;j++){
       var $col = $('<div/>').addClass('cell');
       $row.append($col);
