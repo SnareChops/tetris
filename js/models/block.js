@@ -72,6 +72,13 @@ var Block = function(shape, x, y){
       if (coord.y + position.y < board.bounds.min.y) {return false;}
       if (coord.x + position.x > board.bounds.max.x) {return false;}
       if (coord.y + position.y > board.bounds.max.y) {return false;}
+      for(var row in board.blob){
+        if(!board.blob[row].every(function(cell){
+          var test = (coord.x + position.x === cell && coord.y + position.y === parseInt(row));
+          if(test){return false;}
+          return true;
+        })){return false;}
+      }
       return true;
     });
   }
