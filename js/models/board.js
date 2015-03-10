@@ -27,8 +27,8 @@ var Board = function($box, rows, cols){
 
   self.draw = function(){
     var i,j;
-    board.blocks.forEach(function(x){
-      x.draw(board);
+    self.blocks.forEach(function(x){
+      x.draw(self);
     });
     for(i=0;i<self.rows.length;i++){
       for(j=0;j<self.blob[i].length;j++){
@@ -37,11 +37,12 @@ var Board = function($box, rows, cols){
     }
   };
 
-  self.checkBlobRows = function(){
+  self.checkBlobRows = function(game){
     var i;
     for(i=0;i<self.rows.length;i++){
       if(self.blob[i].length >= self.rows[i].columns.length){
         self.dropRows(i);
+        game.addPoints(10);
       }
     }
   };

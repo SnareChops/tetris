@@ -35,7 +35,7 @@ var Block = function(shape, x, y){
     return true;
   };
 
-  self.rotateRight = function(){
+  self.rotateRight = function(board){
     var midx = Math.floor(self.shape.max.x / 2);
     var midy = Math.floor(self.shape.max.y / 2);
     var newCoordinates = [];

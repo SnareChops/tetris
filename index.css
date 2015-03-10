@@ -60,7 +60,6 @@ overflow:hidden;
     width:100%;
     margin:0;
     height:100%;
-    
 }
 
 .box {
@@ -74,15 +73,12 @@ overflow:hidden;
 .row {
     width:100%;
     height:5%;
-
 }
 
 .cell {
     height:100%;
     width:10%;
-
     display:inline-block;
-    
 }
 
 #intro {
