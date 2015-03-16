@@ -82,9 +82,9 @@ overflow:hidden;
 }
 
 #intro {
-    position:absolute;
-    top:30%;
-    left:15%;
+    float:left;
+    margin-top:10%;
+    width:30%;
     text-align:right;
 }
 h1 {
@@ -107,3 +107,23 @@ h1 {
     left:0;
     background-color: rgba(0,0,0,.6);
 }
+#intro p {
+    font-size:1.2em;
+    padding-top:15px;
+}
+@media all and (max-width : 1024px) {
+    #intro {
+        position:fixed;
+        top:25px;
+        left:40%;
+        width:100px;
+        text-align:center;
+        z-index:100;
+
+    }
+
+
+    .button {
+        display:block;
+    }
+    }
