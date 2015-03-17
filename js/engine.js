@@ -1,9 +1,10 @@
 var Engine = function(board, game) {
-  var self = this, intervalId, blockMoveCounter = 0;
+  var self = this, intervalId, blockMoveCounter = 0, speed = 31, speedIntervalId;
 
   self.start = function () {
     blockMoveCounter = 0;
-    intervalId = setInterval(tick, 100);
+    intervalId = setInterval(tick, 16);
+    speedIntervalId = setInterval(increaseSpeed, 1000 * 20);
   };
 
   self.pause = function () {
@@ -11,7 +12,7 @@ var Engine = function(board, game) {
   };
 
   self.resume = function () {
-    intervalId = setInterval(tick, 100);
+    intervalId = setInterval(tick, 16);
   };
 
   function tick() {
@@ -29,14 +30,18 @@ var Engine = function(board, game) {
 
   function autoBlockMove() {
     blockMoveCounter++;
-    if (blockMoveCounter > 10) {
+    if (blockMoveCounter > (speed < 0 ? 0 : speed)) {
       blockMoveCounter = 0;
-      if (board.blocks[0] == null) {
+      if (board.block == null) {
         board.newBlock();
         game.incrementBlockCount();
       } else {
-        board.blocks[0].moveDown(board);
+        board.block.moveDown(board);
       }
     }
+  }
+
+  function increaseSpeed(){
+    speed--;
   }
 };

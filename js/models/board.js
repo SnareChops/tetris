@@ -1,8 +1,8 @@
-var Board = function($box, rows, cols){
+var Board = function(game, $box, rows, cols){
   var self = this,i,j;
   self.rows = [];
   self.area = $('.box');
-  self.blocks = [];
+  self.block;
   self.blob = {};
   self.bounds = {max: {x:cols-1, y:rows-1}, min: {x: 0, y: 0}};
 
@@ -22,14 +22,17 @@ var Board = function($box, rows, cols){
   self.rows = self.rows.reverse();
 
   self.newBlock = function(){
-    self.blocks[0] = new Block(Math.floor(Math.random() * 6), 4, 18);
+    self.block = new Block(Math.floor(Math.random() * 6), 4, 18);
+    if(self.block.collision(self, {x:4, y:18}, self.block.shape.coordinates)){
+      game.gameOver();
+    }
   };
 
   self.draw = function(){
     var i,j;
-    self.blocks.forEach(function(x){
-      x.draw(self);
-    });
+    if(self.block != null) {
+      self.block.draw(self);
+    }
     for(i=0;i<self.rows.length;i++){
       for(j=0;j<self.blob[i].length;j++){
         self.rows[i].columns[self.blob[i][j]].$obj.css('background-color', 'green');

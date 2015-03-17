@@ -1,1 +1,1 @@
-$(document).on("keyup",function(o){switch(o.which){case 78:board.blocks.push(new Block(1,0,18));break;case 37:board.blocks[0].moveLeft();break;case 39:board.blocks[0].moveRight();break;case 40:board.blocks[0].moveDown()}});
+$(document).on("keyup",function(o){switch(o.which){case 78:board.block.push(new Block(1,0,18));break;case 37:board.block[0].moveLeft();break;case 39:board.block[0].moveRight();break;case 40:board.block[0].moveDown()}});

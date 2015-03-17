@@ -16,7 +16,7 @@ var Block = function(shape, x, y){
       self.shape.coordinates.forEach(function(coord){
         board.blob[coord.y+self.position.y].push(coord.x+self.position.x);
       });
-      board.blocks = [];
+      board.block = null;
       return false;
     }
     self.position.y--;
