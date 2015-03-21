@@ -31,16 +31,32 @@ var Game = function($box, controls, displays){
     self.board = new Board(self, self.$box, 20, 10);
     self.engine = new Engine(self.board, self);
     self.engine.start();
+    if ($(window).width() < 1024) {
+        $('#intro').hide();
+    }
   }
 
   function pause(){
     if(!self.isGameOver) {
       if (self.paused) {
         self.$box.find('div.paused').remove();
+        if ($(window).width() > 1024) {
+          self.$box.find('div.paused').remove();
+        } else {
+          $('#intro').hide();
+          $('.wrapper').find('div.paused').remove();
+        }
+        self.controls.pause.text('Pause Game');
         self.engine.resume();
         self.paused = false;
       } else {
-        self.$box.append($('<div/>').addClass('paused'));
+        if ($(window).width() > 1024){
+          self.$box.append($('<div/>').addClass('paused'))
+        } else {
+          $('#intro').show();
+          $('.wrapper').append($('<div/>').addClass('paused'));
+        }
+        self.controls.pause.text('Resume Game');
         self.engine.pause();
         self.paused = true;
       }
@@ -49,13 +65,14 @@ var Game = function($box, controls, displays){
 
   self.gameOver = function(){
     pause();
-    self.$box.find('.paused').append($('<p/>').html("Game Over!"));
+    self.$box.find('.paused').html(ui.gameOver(self.score, "1:45", self.blockCount));
     self.isGameOver = true;
-    self.$box.html(ui.gameOver(self.score, "1:45", self.blockCount));
+    //self.$box.html(ui.gameOver(self.score, "1:45", self.blockCount));
   };
 
   controls.new.click(start);
   controls.pause.click(pause);
+  $(window).dblclick(pause);
 
   $(document).on('keydown', function(e){
     if(self.board.block == null) return;

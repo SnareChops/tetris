@@ -10,7 +10,7 @@ $box.height(($(window).height()-75+'px'));
 $box.width(($(window).height()/2));
 
 ui.gameOver = function(score, time, blockCount){
-  var $template = $('#game-over-template').html();
+  var $template = $($('#game-over-template').html());
   $template.find('.score').html(score);
   $template.find('.time').html(time);
   $template.find('.block-count').html(blockCount);
