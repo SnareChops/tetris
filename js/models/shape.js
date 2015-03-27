@@ -3,7 +3,6 @@ Array.max = function( array ){
 };
 
 var Shape = function(shape){
-	console.log(shapes[shape].coordinates);
   var self = this;
   self.coordinates = shapes[shape].coordinates;
   self.color = shapes[shape].color;
