@@ -1,1 +1,0 @@
-{"version":3,"file":"point.js","sourceRoot":"","sources":["../../src/point.ts"],"names":[],"mappings":"","sourcesContent":["export interface Point {\n  x: number;\n  y: number;\n}\n"]}

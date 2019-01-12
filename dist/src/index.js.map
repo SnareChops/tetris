@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/index.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,CAAC;AAChB,OAAO,SAAS,CAAC;AACjB,OAAO,SAAS,CAAC;AACjB,OAAO,QAAQ,CAAC;AAChB,OAAO,QAAQ,CAAC;AAChB,OAAO,OAAO,CAAC","sourcesContent":["import './game';\nimport './board';\nimport './block';\nimport './cell';\nimport './menu';\nimport './row';\n"]}
