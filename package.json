@@ -4,16 +4,21 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "karma": "^0.12.31"
+    "lit-html": "^1.0.0-rc.2"
   },
   "devDependencies": {
-    "jasmine-core": "^2.2.0",
-    "karma": "^0.12.31",
-    "karma-chrome-launcher": "^0.1.7",
-    "karma-jasmine": "^0.3.5"
+    "http-server": "^0.11.1",
+    "typescript": "^3.2.2",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "compile": "node_modules/.bin/tsc -p .",
+    "webpack": "node_modules/.bin/webpack",
+    "build": "npm run clean && npm run compile && npm run webpack",
+    "start": "node_modules/.bin/http-server -c-1"
   },
   "repository": {
     "type": "git",
