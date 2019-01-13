@@ -11,6 +11,12 @@ interface Bounds {
 
 export class Board extends HTMLElement {
   public game: Game;
+  public tick: number = 0;
+  public speed: number = 30;
+  public rows: Row[] = [];
+  public block: Block;
+  public blob: any = {};
+  public bounds: Bounds;
 
   public get rowNumber(): number {
     const rows = this.getAttribute('rows');
@@ -22,13 +28,20 @@ export class Board extends HTMLElement {
     return !!cols ? +cols : 0;
   }
 
-  public rows: Row[] = [];
-  public block: Block;
-  public blob: any = {};
-  public bounds: Bounds;
+  public newBlock() {
+    this.block = new Block(Math.floor(Math.random() * 6), 4, 18);
+    if (this.block.collision(this)) {
+      console.log('GAME OVER');
+      this.game.gameOver();
+    }
+  }
 
-  public connectedCallback() {
-    this.bounds = { max: { x: this.rowNumber - 1, y: this.colNumber - 1 }, min: { x: 0, y: 0 } };
+  public reset() {
+    this.innerHTML = '';
+  }
+
+  public new() {
+    this.bounds = { max: { x: this.colNumber - 1, y: this.rowNumber - 1 }, min: { x: 0, y: 0 } };
 
     for (let i = 0; i < this.rowNumber; i++) {
       this.blob[i] = [];
@@ -45,19 +58,32 @@ export class Board extends HTMLElement {
     this.rows = this.rows.reverse();
   }
 
-  public newBlock() {
-    this.block = new Block(Math.floor(Math.random() * 6), 4, 18);
-    if (this.block.collision(this, { x: 4, y: 18 }, this.block.shape.coordinates)) {
-      this.game.gameOver();
+  // Called every frame
+  public update() {
+    this.tick++;
+    if (this.tick > (this.speed < 0 ? 0 : this.speed)) {
+      this.tick = 0;
+      if (this.block == null) {
+        this.newBlock();
+        this.game.incrementBlockCount();
+      } else {
+        this.block.moveDown(this);
+      }
+      this.checkBlobRows();
     }
   }
 
   public clear() {
-    this.innerHTML = '';
+    for (const row of this.rows) {
+      for (const cell of row.cells) {
+        cell.style.backgroundColor = 'white';
+      }
+    }
   }
 
   // Called every frame
   public draw() {
+    this.clear();
     if (this.block != null) {
       this.block.draw(this);
     }

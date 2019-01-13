@@ -1,7 +1,7 @@
-import { render, html } from 'lit-html';
 import { Board } from './board';
 import { Engine } from './engine';
 import { Menu } from './menu';
+import { el } from './helpers';
 
 interface Controls {
   new: HTMLElement;
@@ -18,23 +18,32 @@ interface Displays {
 }
 
 // prettier-ignore
-const template = (e: Game) => html`
-  <wrapper>
-    <menu- .game=${e}></menu->
-    <board- .game=${e} rows="20" cols="10"></board->
-  </wrapper>
-`;
+const template = (e: Game) => {
+  const wrapper = el('wrapper');
+  const menu = el<Menu>('menu-');
+  const board = el<Board>('board-');
+  menu.game = e;
+  board.game = e;
+  board.setAttribute('rows', '20');
+  board.setAttribute('cols', '10');
+  
+  wrapper.append(menu);
+  wrapper.append(board);
 
-const gameOverTemplate = (e: Game) => html`
-  <splash>
+  return wrapper;
+}
+
+const gameOverTemplate = (e: Game) => {
+  const splash = el('splash');
+  splash.innerHTML = `
     <h1>Game Over!</h1>
     <p><em>Thanks for playing!</em></p>
     <p>Final Score: ${e.score}</p>
     <p>Time Played: ${e.time}</p>
     <p>Number of Blocks: ${e.blockCount}</p>
-  </splash>
-`;
-
+  `;
+  return splash;
+};
 export class Game extends HTMLElement {
   public $wrapper: HTMLElement;
   public $intro: HTMLElement;
@@ -50,34 +59,33 @@ export class Game extends HTMLElement {
   // TODO
   public time: string;
 
-  constructor(controls: Controls, displays: Displays) {
+  constructor() {
     super();
-    this.controls = controls;
-    this.displays = displays;
 
     document.addEventListener('keydown', (e: KeyboardEvent) => {
       if (this.board.block == null) return;
       switch (e.which) {
-        case this.controls.left:
+        // left: 37, right: 39, down: 40, rotate: 38
+        case 37:
           this.board.block.moveLeft(this.board);
           break;
-        case this.controls.right:
+        case 39:
           this.board.block.moveRight(this.board);
           break;
-        case this.controls.down:
+        case 40:
           this.board.block.moveDown(this.board);
           break;
-        case this.controls.rotate:
+        case 38:
           this.board.block.rotateRight(this.board);
           break;
       }
     });
 
-    window.addEventListener('dblclick', this.pause.bind(this));
+    window.addEventListener('dblclick', () => (!!this.engine ? this.pause() : void 0));
   }
 
   public connectedCallback() {
-    render(template(this), this);
+    this.append(template(this));
     this.board = this.querySelector<Board>('board-');
     this.$intro = this.querySelector('intro');
     this.$wrapper = this.querySelector('wrapper');
@@ -86,36 +94,37 @@ export class Game extends HTMLElement {
 
   public addPoints(points: number) {
     this.score += points;
-    this.displays.score.innerHTML = this.score.toString();
   }
 
   public incrementBlockCount() {
     this.blockCount++;
-    this.displays.blockCount.innerHTML = this.blockCount.toString();
   }
 
   public start() {
     this.isGameOver = false;
     this.paused = false;
-    this.board.clear();
+    this.board.reset();
+    this.board.new();
     this.score = 0;
     this.blockCount = 0;
-    this.engine = new Engine(this.board, this);
+    this.engine = new Engine(this);
     this.engine.start();
   }
 
   public pause() {
     if (!this.isGameOver) {
       if (this.paused) {
-        this.controls.pause.textContent = 'Pause Game';
         this.engine.resume();
         this.paused = false;
       } else {
-        this.controls.pause.textContent = 'Resume Game';
         this.engine.pause();
         this.paused = true;
       }
     }
+  }
+
+  public update() {
+    this.board.update();
   }
 
   public draw() {
@@ -125,7 +134,8 @@ export class Game extends HTMLElement {
 
   public gameOver() {
     this.pause();
-    render(gameOverTemplate(this), this.board.querySelector('.paused'));
+    this.board.innerHTML = '';
+    this.board.append(gameOverTemplate(this));
     this.isGameOver = true;
   }
 }

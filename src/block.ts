@@ -27,7 +27,7 @@ export class Block {
   }
 
   public moveDown(board: Board): boolean {
-    if (this.collision(board, { x: this.position.x, y: this.position.y - 1 }, this.shape.coordinates)) {
+    if (this.collision(board, { x: this.position.x, y: this.position.y - 1 })) {
       for (const coord of this.shape.coordinates) {
         board.blob[coord.y + this.position.y].push(coord.x + this.position.x);
       }
@@ -39,7 +39,7 @@ export class Block {
   }
 
   public moveRight(board: Board): boolean {
-    if (this.collision(board, { x: this.position.x + 1, y: this.position.y }, this.shape.coordinates)) {
+    if (this.collision(board, { x: this.position.x + 1, y: this.position.y })) {
       return false;
     }
     this.position.x++;
@@ -47,7 +47,7 @@ export class Block {
   }
 
   public moveLeft(board: Board): boolean {
-    if (this.collision(board, { x: this.position.x - 1, y: this.position.y }, this.shape.coordinates)) {
+    if (this.collision(board, { x: this.position.x - 1, y: this.position.y })) {
       return false;
     }
     this.position.x--;
@@ -64,7 +64,7 @@ export class Block {
       var result = translateCell(xdiff, ydiff);
       newCoordinates.push({ x: result.x, y: result.y });
     }
-    if (this.collision(board, this.position, newCoordinates)) {
+    if (this.collision(board, void 0, newCoordinates)) {
       return false;
     }
     this.shape.coordinates = newCoordinates;
@@ -75,19 +75,26 @@ export class Block {
     for (const coord of this.shape.coordinates) {
       var calcx = coord.x + this.position.x;
       var calcy = coord.y + this.position.y;
-      console.log('color', this.color);
       board.rows[calcy].cells[calcx].style.backgroundColor = this.color;
     }
   }
 
-  public collision(board: Board, position: Point, coordinates: Point[]): boolean {
+  // Takes postion of this block
+  // Takes coordinates of where the block will rotate to if rotating
+
+  // Did it collide?
+  public collision(
+    board: Board,
+    position: Point = this.position,
+    coordinates: Point[] = this.shape.coordinates
+  ): boolean {
     return !coordinates.every(coord => {
       if (coord.x + position.x < board.bounds.min.x) {
-        console.log('Bottom of board');
+        console.log('Left of board');
         return false;
       }
       if (coord.y + position.y < board.bounds.min.y) {
-        console.log('Left of board');
+        console.log('Bottom of board');
         return false;
       }
       if (coord.x + position.x > board.bounds.max.x) {

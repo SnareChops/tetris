@@ -7,16 +7,21 @@
     "lit-html": "^1.0.0-rc.2"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.18",
+    "assert": "^1.4.1",
     "http-server": "^0.11.1",
+    "mocha": "^5.2.0",
     "typescript": "^3.2.2",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run build && npm run webpack:test",
     "clean": "rm -rf dist",
     "compile": "node_modules/.bin/tsc -p .",
     "webpack": "node_modules/.bin/webpack",
+    "webpack:test": "node_modules/.bin/webpack --config webpack.tests.js",
     "build": "npm run clean && npm run compile && npm run webpack",
     "start": "node_modules/.bin/http-server -c-1"
   },

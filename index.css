@@ -201,7 +201,7 @@ paused {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-.splash {
+splash {
   background-color: white;
   color: black;
   margin: 0 auto;
@@ -209,8 +209,8 @@ paused {
   box-sizing: border-box;
   border: 3px solid black;
 }
-.splash h1,
-.splash p {
+splash h1,
+splash p {
   text-align: center;
 }
 

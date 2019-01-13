@@ -1,6 +1,6 @@
 import { Point } from './point';
 
-const shapeDefs = [
+export const shapeDefs = [
   { coordinates: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }], color: '#00f0f0' }, //straight block
   { coordinates: [{ x: 0, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 0 }], color: '#0000f0' }, //left angle
   { coordinates: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 2, y: 1 }], color: '#f0a000' }, //right angle
